@@ -41,4 +41,10 @@ class PeticionHandler implements PeticionesInterface
         $this->flushPeticion($peticion);
     }
 
+    // Buscamos todos las peticiones en el respositorio
+    public function searchAllPeticiones(): array
+    {
+        return $this->peticionesRepository->findAll();
+    }
+
 }

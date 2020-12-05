@@ -21,7 +21,7 @@ class AscensorHandler implements AscensoresInterface
     }
 
     // Buscamos todos los ascensores en el respositorio
-    public function searchAllAscensores()
+    public function searchAllAscensores(): array
     {
         return $this->ascensoresRepository->findAll();
     }
@@ -42,11 +42,14 @@ class AscensorHandler implements AscensoresInterface
     public function getAscensorLibre()
     {
         $ascensores = $this->searchAllAscensores();
+        $ascensorOptimo = $this->getAscensorOptimo($ascensores);
 
         /* Cogemos el ascensor libre */
         foreach ($ascensores as $ascensor)
         {
-            if($ascensor->getDisponible() == 1)
+
+            //Cogeremos el ascensor que esté disponible pero que también haya tenido menos desgaste de recorrido total
+            if($ascensor->getDisponible() == 1 && $ascensor->getId() == $ascensorOptimo->getId())
             {
                 $this->setAscensorOcupado($ascensor);
                 return $ascensor;
@@ -65,12 +68,12 @@ class AscensorHandler implements AscensoresInterface
     }
 
     // Seteamos nuestro ascensor libre a ocupado para esta solicitud
-    /*public function setAscensorLibre($ascensor)
+    public function setAscensorLibre($ascensor)
     {
         $ascensor = $this->searchAscensor($ascensor);
         $ascensor->setDisponible(1);
         $this->flushAscensor();
-    }*/
+    }
 
     public function setNuevoRecorridoAscensor($ascensor, $distanciaRecorrida)
     {
@@ -78,5 +81,19 @@ class AscensorHandler implements AscensoresInterface
         $distanciaTotal = $ascensor->getDistanciaTotal() + $distanciaRecorrida;
         $ascensor->setDistanciaTotal($distanciaTotal);
         $this->flushAscensor();
+    }
+
+    public function getAscensorOptimo(array $ascensores)
+    {
+        $recorridoMaximoAscensor = 0;
+        $ascensorOptimo = new Ascensores;
+        foreach($ascensores as $ascensor)
+        {
+            if($ascensor->getDistanciaTotal() <= $recorridoMaximoAscensor){
+                $ascensorOptimo = $ascensor;
+            }
+        }
+
+        return $ascensorOptimo;
     }
 }

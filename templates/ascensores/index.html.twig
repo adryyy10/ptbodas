@@ -14,18 +14,14 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">09:00</th>
-      <td><b>Posicion actual:</b> 0 <br> <b>Recorridas:</b> 0</td>
-      <td><b>Posicion actual:</b> 0 <br> <b>Recorridas:</b> 0</td>
-      <td><b>Posicion actual:</b> 0 <br> <b>Recorridas:</b> 0</td>
-    </tr>
-    <tr>
-      <th scope="row">09:05</th>
-      <td><b>Posicion actual:</b> 2 <br> <b>Recorridas:</b> 2</td>
-      <td><b>Posicion actual:</b> 1 <br> <b>Recorridas:</b> 1</td>
-      <td><b>Posicion actual:</b> 0 <br> <b>Recorridas:</b> 0</td>
-    </tr>
+    {% for peticion in peticiones %}
+      <tr>
+        <th scope="row">{{peticion.inicio}}-{{peticion.final}}</th>
+        {% for ascensor in ascensores %}
+          <td><b>Posicion actual:</b> {{ascensor.id}} <br> <b>Recorridas:</b> {{ascensor.distancia_total}}</td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
   </tbody>
 </table>
 
