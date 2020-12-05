@@ -2,8 +2,9 @@
 
 namespace App\Handler;
 
+use App\Entity\Ascensores;
+use App\Interfaces\AscensoresInterface as AscensoresInterface;
 use App\Repository\AscensoresRepository;
-use AscensoresInterface;
 
 class AscensorHandler implements AscensoresInterface
 {
@@ -14,12 +15,25 @@ class AscensorHandler implements AscensoresInterface
         $this->ascensoresRepository = $ascensoresRepository;
     }
 
+    // Buscamos todos los ascensores en el respositorio
     public function searchAllAscensores()
     {
         return $this->ascensoresRepository->findAll();
     }
 
-    public function getAscensorLibre(){
-        
+    // Extraemos de todos los ascensores, el primero disponible
+    public function getAscensorLibre()
+    {
+        $ascensorDisponible = new Ascensores;
+        $ascensores = $this->searchAllAscensores();
+        /* Cogemos el ascensor libre */
+        foreach ($ascensores as $ascensor) {
+            if($ascensor->getDisponible() == 1){
+                $ascensorDisponible = $ascensor;
+                break;
+            }
+            
+        }
+        return $ascensorDisponible;
     }
 }
