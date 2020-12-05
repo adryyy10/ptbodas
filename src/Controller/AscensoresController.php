@@ -32,19 +32,9 @@ class AscensoresController extends AbstractController
         //Llamamos a nuestros ascensores creados previamente con FixturesBundle
         $ascensores = $this->ascensorHandler->searchAllAscensores();
 
-        //Secuencia 1
-        $this->peticionHandler->setPeticiones(9,11,5,0,2);
-        //Secuencia 2
-        //$this->peticionesHandler->setPeticiones(9,10,10,0,1);
-        //Secuencia 3
-        //$this->peticionesHandler->setPeticiones(11,18,20,0,1);
-        //$this->peticionesHandler->setPeticiones(11,18,20,0,2);
-        //$this->peticionesHandler->setPeticiones(11,18,20,0,3);
-        //Secuencia 4
-        // $this->peticionesHandler->setPeticiones(14,15,4,1,0);
-        // $this->peticionesHandler->setPeticiones(14,15,4,2,0);
-        // $this->peticionesHandler->setPeticiones(14,15,4,3,0);
-
+        //Insertamos todas las peticiones de golpe
+        $this->peticionHandler->loadAllPeticiones();
+        
         //Recogemos todas las peticiones
         $peticiones = $this->peticionHandler->searchAllPeticiones();
 
