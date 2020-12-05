@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Ascensores;
 use App\Handler\AscensorHandler as AscensorHandler;
+use App\Handler\PeticionHandler;
 use App\Repository\AscensoresRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,11 +15,13 @@ class AscensoresController extends AbstractController
 
     protected $ascensoresRepository;
     protected $ascensorHandler;
+    protected $peticionHandler;
 
-    public function __construct(AscensoresRepository $ascensoresRepository, AscensorHandler $ascensorHandler)
+    public function __construct(AscensoresRepository $ascensoresRepository, AscensorHandler $ascensorHandler, PeticionHandler $peticionHandler)
     {
         $this->ascensoresRepository = $ascensoresRepository;
         $this->ascensorHandler = $ascensorHandler;
+        $this->peticionHandler = $peticionHandler;
     }
 
     /**
@@ -41,17 +44,26 @@ class AscensoresController extends AbstractController
     public function setSolicitudes($inicio, $final, $intervalo, $origen, $destino){
     
     //Distancia reccorida para el ascensor
-    $distancia = abs($origen-$destino);
+    $distanciaRecorrida = abs($origen-$destino);
+    $ascensorDisponible = new Ascensores;
 
     // Mientras no lleguemos al final, vamos iterando en los intervalos establecidos
-      //for ($i = $inicio; $i <= $final; $i++){
-        //for ($j = 0; $j < 60; $j+=$intervalo){
+      for ($i = $inicio; $i <= $final; $i++){
+        for ($j = 0; $j < 60; $j+=$intervalo){
 
             //Buscamos el primer ascensor disponible
             $ascensorDisponible = $this->ascensorHandler->getAscensorLibre();
-            dd($ascensorDisponible);
-        //}
-      //}
+            //dd($ascensorDisponible);
+
+            //Actualizamos los pisos recorridos por dicho ascensor
+            $this->ascensorHandler->setNuevoRecorridoAscensor($ascensorDisponible, $distanciaRecorrida);
+            
+            //Insertamos en la Tabla Solicitudes, nuestra nueva solicitud con el ascensor asignado
+            $this->peticionHandler->createNewPeticion($ascensorDisponible, $inicio, $final, $origen, $destino, $distanciaRecorrida);
+        }
+        //Setear el nuevo ascensor ocupado a disponible otra vez ya que ha acabado su solicitud
+        //$ascensorDisponible
+      }
     }
 
 }
