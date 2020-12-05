@@ -18,7 +18,7 @@
       <tr>
         <th scope="row">{{peticion.inicio}}-{{peticion.final}}</th>
         {% for ascensor in ascensores %}
-          <td><b>Posicion actual:</b> {{ascensor.id}} <br> <b>Recorridas:</b> {{ascensor.distancia_total}}</td>
+          <td><b>Posicion actual:</b> {{ascensor.getId()}} <br> <b>Recorridas:</b> {{ascensor.getDistanciaTotal()|number_format}}</td>
         {% endfor %}
       </tr>
     {% endfor %}

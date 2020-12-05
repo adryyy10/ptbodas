@@ -56,7 +56,7 @@ class AscensorHandler implements AscensoresInterface
             }
             
         }
-        return 'No hay ascensores disponibles';
+        return $ascensorOptimo;
     }
 
     // Seteamos nuestro ascensor libre a ocupado para esta solicitud
@@ -83,9 +83,20 @@ class AscensorHandler implements AscensoresInterface
         $this->flushAscensor();
     }
 
+    public function setPosicion($ascensor, $destino)
+    {
+        $ascensor = $this->searchAscensor($ascensor);
+        $ascensor->setPosicion($destino);
+        $this->flushAscensor();
+    }
+
     public function getAscensorOptimo(array $ascensores)
     {
-        $recorridoMaximoAscensor = 0;
+        /**
+         * Cogemos la distancia total recorrida del primer ascensor para que nos sirva 
+         * de comparativo con el resto de ascensores y poder coger el que tiene menos rodaje 
+        */
+        $recorridoMaximoAscensor = $ascensores[0]->getDistanciaTotal();
         $ascensorOptimo = new Ascensores;
         foreach($ascensores as $ascensor)
         {
