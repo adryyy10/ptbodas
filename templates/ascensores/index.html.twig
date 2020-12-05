@@ -7,19 +7,21 @@
     <table class="table">
   <thead>
     <tr>
-      <th scope="col">Peticiones</th>
-      <th scope="col">Ascensor 1</th>
-      <th scope="col">Ascensor 2</th>
-      <th scope="col">Ascensor 3</th>
+      <th scope="col">Nº Petición</th>
+      <th scope="col">Nº acensor</th>
+      <th scope="col">Posición ascensor</th>
+      <th scope="col">Plantas recorridas en esa petición</th>
+      <th scope="col">Total Plantas recorridas</th>
     </tr>
   </thead>
   <tbody>
     {% for peticion in peticiones %}
       <tr>
-        <th scope="row">{{peticion.inicio}}-{{peticion.final}}</th>
-        {% for ascensor in ascensores %}
-          <td><b>Posicion actual:</b> {{ascensor.getId()}} <br> <b>Recorridas:</b> {{ascensor.getDistanciaTotal()|number_format}}</td>
-        {% endfor %}
+        <th scope="row">{{peticion.id}}</th>
+        <th scope="row">{{peticion.ascensor.getId()}}</th>
+        <th scope="row">{{peticion.ascensor.getPosicion()}}</th>
+        <th scope="row">{{peticion.getPlantasRecorridas()}}</th>
+        <th scope="row">{{peticion.ascensor.getDistanciaTotal()}}</th>
       </tr>
     {% endfor %}
   </tbody>

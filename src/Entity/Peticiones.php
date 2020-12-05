@@ -123,4 +123,9 @@ class Peticiones
 
         return $this;
     }
+
+    public function getPlantasRecorridas()
+    {
+        return abs($this->origen-$this->destino);
+    }
 }

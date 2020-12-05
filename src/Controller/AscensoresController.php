@@ -33,17 +33,17 @@ class AscensoresController extends AbstractController
         $ascensores = $this->ascensorHandler->searchAllAscensores();
 
         //Secuencia 1
-        //$this->setPeticiones(9,11,5,0,2);
+        $this->peticionHandler->setPeticiones(9,11,5,0,2);
         //Secuencia 2
-        //$this->setPeticiones(9,10,10,0,1);
+        //$this->peticionesHandler->setPeticiones(9,10,10,0,1);
         //Secuencia 3
-        //$this->setPeticiones(11,18,20,0,1);
-        //$this->setPeticiones(11,18,20,0,2);
-        //$this->setPeticiones(11,18,20,0,3);
+        //$this->peticionesHandler->setPeticiones(11,18,20,0,1);
+        //$this->peticionesHandler->setPeticiones(11,18,20,0,2);
+        //$this->peticionesHandler->setPeticiones(11,18,20,0,3);
         //Secuencia 4
-        // $this->setPeticiones(14,15,4,1,0);
-        // $this->setPeticiones(14,15,4,2,0);
-        // $this->setPeticiones(14,15,4,3,0);
+        // $this->peticionesHandler->setPeticiones(14,15,4,1,0);
+        // $this->peticionesHandler->setPeticiones(14,15,4,2,0);
+        // $this->peticionesHandler->setPeticiones(14,15,4,3,0);
 
         //Recogemos todas las peticiones
         $peticiones = $this->peticionHandler->searchAllPeticiones();
@@ -53,34 +53,6 @@ class AscensoresController extends AbstractController
             "peticiones" => $peticiones,
             'controller_name' => 'AscensoresController',
         ]);
-    }
-
-    public function setPeticiones($inicio, $final, $intervalo, $origen, $destino){
-    
-    //Distancia reccorida para el ascensor
-    $distanciaRecorrida = abs($origen-$destino);
-
-    // Mientras no lleguemos al final, vamos iterando en los intervalos establecidos
-      for ($i = $inicio; $i < $final; $i++){
-        for ($j = 0; $j < 60; $j+=$intervalo){
-
-            //Buscamos el primer ascensor disponible
-            $ascensorDisponible = $this->ascensorHandler->getAscensorLibre();
-
-            //Actualizamos los pisos recorridos por dicho ascensor
-            $this->ascensorHandler->setNuevoRecorridoAscensor($ascensorDisponible, $distanciaRecorrida);
-
-            //Actualizamos posicion del ascensor
-            $this->ascensorHandler->setPosicion($ascensorDisponible,$destino);
-            
-            //Insertamos en la Tabla Solicitudes, nuestra nueva solicitud con el ascensor asignado
-            $this->peticionHandler->createNewPeticion($ascensorDisponible, $inicio, $final, $origen, $destino, $distanciaRecorrida);
-
-            //Setear el nuevo ascensor ocupado a disponible otra vez ya que ha acabado su solicitud
-            $ascensorDisponible = $this->ascensorHandler->setAscensorLibre($ascensorDisponible);
-        }
-
-      }
     }
 
 }
