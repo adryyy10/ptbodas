@@ -27,19 +27,19 @@ class AscensorHandler implements AscensoresInterface
     }
 
     //Buscamos un solo ascensor
-    public function searchAscensor($ascensor)
+    public function searchAscensor(Ascensores $ascensor): Ascensores
     {
         return $this->ascensoresRepository->find($ascensor->getId());
     }
 
     //Hacemos flush del ascensor
-    public function flushAscensor()
+    public function flushAscensor(): void
     {
         $this->entityManager->flush();
     }
 
     // Extraemos de todos los ascensores, el primero disponible
-    public function getAscensorLibre()
+    public function getAscensorLibre(): Ascensores
     {
         $ascensores = $this->searchAllAscensores();
         $ascensorOptimo = $this->getAscensorOptimo($ascensores);
@@ -47,20 +47,18 @@ class AscensorHandler implements AscensoresInterface
         /* Cogemos el ascensor libre */
         foreach ($ascensores as $ascensor)
         {
-
             //Cogeremos el ascensor que esté disponible pero que también haya tenido menos desgaste de recorrido total
             if($ascensor->getDisponible() == 1 && $ascensor->getId() == $ascensorOptimo->getId())
             {
                 $this->setAscensorOcupado($ascensor);
                 return $ascensor;
-            }
-            
+            }   
         }
         return $ascensorOptimo;
     }
 
     // Seteamos nuestro ascensor libre a ocupado para esta solicitud
-    public function setAscensorOcupado($ascensor)
+    public function setAscensorOcupado(Ascensores $ascensor): void
     {
         $ascensor = $this->searchAscensor($ascensor);
         $ascensor->setDisponible(0);
@@ -68,14 +66,14 @@ class AscensorHandler implements AscensoresInterface
     }
 
     // Seteamos nuestro ascensor libre a ocupado para esta solicitud
-    public function setAscensorLibre($ascensor)
+    public function setAscensorLibre(Ascensores $ascensor): void
     {
         $ascensor = $this->searchAscensor($ascensor);
         $ascensor->setDisponible(1);
         $this->flushAscensor();
     }
 
-    public function setNuevoRecorridoAscensor($ascensor, $distanciaRecorrida): string
+    public function setNuevoRecorridoAscensor(Ascensores $ascensor, int $distanciaRecorrida): int
     {
         $ascensor = $this->searchAscensor($ascensor);
         $distanciaTotal = $ascensor->getDistanciaTotal() + $distanciaRecorrida;
@@ -85,7 +83,7 @@ class AscensorHandler implements AscensoresInterface
         return $distanciaTotal;
     }
 
-    public function setPosicion($ascensor, $destino): int
+    public function setPosicion(Ascensores $ascensor, int $destino): int
     {
         $ascensor = $this->searchAscensor($ascensor);
         $ascensor->setPosicion($destino);
@@ -94,7 +92,7 @@ class AscensorHandler implements AscensoresInterface
         return $ascensor->getPosicion();
     }
 
-    public function getAscensorOptimo(array $ascensores)
+    public function getAscensorOptimo(array $ascensores): Ascensores
     {
         /**
          * Cogemos la distancia total recorrida del primer ascensor para que nos sirva 
@@ -104,11 +102,11 @@ class AscensorHandler implements AscensoresInterface
         $ascensorOptimo = new Ascensores;
         foreach($ascensores as $ascensor)
         {
-            if($ascensor->getDistanciaTotal() <= $recorridoMaximoAscensor){
+            if($ascensor->getDistanciaTotal() <= $recorridoMaximoAscensor)
+            {
                 $ascensorOptimo = $ascensor;
             }
         }
-
         return $ascensorOptimo;
     }
 }

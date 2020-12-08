@@ -8,5 +8,5 @@ interface PeticionesInterface
 {
     public function flushPeticion(Peticiones $peticion);
 
-    public function setPeticiones($inicio, $final, $intervalo, $origen, $destino);
+    public function setPeticiones(int $inicio,int $final,int $intervalo,int $origen,int $destino);
 }

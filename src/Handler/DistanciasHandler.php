@@ -31,7 +31,7 @@ class DistanciasHandler implements DistanciasInterface
         $this->flushDistancia($distanciaBySolicitud);
     }
 
-    public function flushDistancia(DistanciaAscensorSolicitud $distanciaAscensorSolicitud)
+    public function flushDistancia(DistanciaAscensorSolicitud $distanciaAscensorSolicitud): void
     {
         $this->entityManager->persist($distanciaAscensorSolicitud);
         $this->entityManager->flush();

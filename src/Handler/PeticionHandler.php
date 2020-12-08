@@ -26,7 +26,7 @@ class PeticionHandler implements PeticionesInterface
         $this->distanciasHandler = $distanciasHandler;
     }
 
-    public function loadAllPeticiones()
+    public function loadAllPeticiones(): void
     {
         //Secuencia 1
         $this->setPeticiones(9,11,5,0,2);
@@ -42,7 +42,7 @@ class PeticionHandler implements PeticionesInterface
         $this->setPeticiones(14,15,4,3,0);
     }
 
-    public function setPeticiones($inicio, $final, $intervalo, $origen, $destino)
+    public function setPeticiones(int $inicio,int $final,int $intervalo,int $origen,int $destino)
     {
     
         //Distancia reccorida para el ascensor
@@ -75,7 +75,7 @@ class PeticionHandler implements PeticionesInterface
     }
 
     //Creamos nueva peticion en la tabla Peticiones
-    public function createNewPeticion($ascensor, $inicio,$final,$origen,$destino,$distancia): int
+    public function createNewPeticion(Ascensores $ascensor,int $inicio,int $final,int $origen,int $destino,int $distancia): int
     {
         $peticion = new Peticiones;
         $peticion->setAscensor($ascensor);
@@ -91,7 +91,7 @@ class PeticionHandler implements PeticionesInterface
     }
 
     //Hacemos flush de la peticion
-    public function flushPeticion($peticion)
+    public function flushPeticion(Peticiones $peticion): void
     {
         $this->entityManager->persist($peticion);
         $this->entityManager->flush();

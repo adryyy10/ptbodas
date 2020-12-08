@@ -23,19 +23,30 @@
         {% endif %}
       >
         <th scope="row">{{peticion.id}}</th>
-        <th scope="row">{{peticion.ascensor.getId()}}</th>
+        <th scope="row">Ascensor {{peticion.ascensor.getId()}}</th>
         <th scope="row">
           {% for distancia in distancias %}
             {% if distancia.peticion == peticion.id and distancia.getAscensor().getPosicion() == peticion.ascensor.getPosicion() %}
-              {{distancia.getPosicionActual()}}
+              {% if distancia.getPosicionActual() == 0 %}
+                Planta baja
+              {% else %}
+                {{distancia.getPosicionActual()}}ª Planta
+              {% endif %}
             {% endif %}
           {% endfor %}
         </th>
-        <th scope="row">{{peticion.getPlantasRecorridas()}}</th>
+        <th scope="row">
+          {{peticion.getPlantasRecorridas()}}
+          {% if peticion.getPlantasRecorridas() == 1 %}
+             Planta
+          {% else %}
+             Plantas
+          {% endif %}
+        </th>
         <th scope="row">
           {% for distancia in distancias %}
             {% if distancia.peticion == peticion.id and distancia.getAscensor().getId() == peticion.ascensor.getId() %}
-              {{distancia.getDistanciaTotal()}}
+              {{distancia.getDistanciaTotal()}} Plantas
             {% endif %}
           {% endfor %}
         </th>
