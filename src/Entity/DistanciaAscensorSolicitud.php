@@ -32,6 +32,11 @@ class DistanciaAscensorSolicitud
      */
     private $peticion;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $posicion_actual;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +74,18 @@ class DistanciaAscensorSolicitud
     public function setPeticion(string $peticion): self
     {
         $this->peticion = $peticion;
+
+        return $this;
+    }
+
+    public function getPosicionActual(): ?string
+    {
+        return $this->posicion_actual;
+    }
+
+    public function setPosicionActual(string $posicion_actual): self
+    {
+        $this->posicion_actual = $posicion_actual;
 
         return $this;
     }

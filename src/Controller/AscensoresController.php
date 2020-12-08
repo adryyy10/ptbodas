@@ -36,7 +36,7 @@ class AscensoresController extends AbstractController
         $ascensores = $this->ascensorHandler->searchAllAscensores();
 
         //Insertamos todas las peticiones de golpe
-        $this->peticionHandler->loadAllPeticiones();
+        //$this->peticionHandler->loadAllPeticiones();
         
         //Recogemos todas las peticiones
         $peticiones = $this->peticionHandler->searchAllPeticiones();

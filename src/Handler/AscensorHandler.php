@@ -85,11 +85,13 @@ class AscensorHandler implements AscensoresInterface
         return $distanciaTotal;
     }
 
-    public function setPosicion($ascensor, $destino)
+    public function setPosicion($ascensor, $destino): int
     {
         $ascensor = $this->searchAscensor($ascensor);
         $ascensor->setPosicion($destino);
         $this->flushAscensor();
+
+        return $ascensor->getPosicion();
     }
 
     public function getAscensorOptimo(array $ascensores)

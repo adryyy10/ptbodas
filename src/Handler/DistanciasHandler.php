@@ -20,12 +20,13 @@ class DistanciasHandler implements DistanciasInterface
     }
 
     //Hacemos flush de la distancia recorrida en ese momento por el ascensor, con su solicitud
-    public function createNewDistanciaTotalBySolicitud(int $distanciaTotal, Ascensores $ascensorDisponible, int $peticionId)
+    public function createNewDistanciaTotalBySolicitud(int $distanciaTotal, Ascensores $ascensorDisponible, int $peticionId, int $posicionActual)
     {
         $distanciaBySolicitud = new DistanciaAscensorSolicitud;
         $distanciaBySolicitud->setDistanciaTotal($distanciaTotal);
         $distanciaBySolicitud->setAscensor($ascensorDisponible);
         $distanciaBySolicitud->setPeticion($peticionId);
+        $distanciaBySolicitud->setPosicionActual($posicionActual);
 
         $this->flushDistancia($distanciaBySolicitud);
     }

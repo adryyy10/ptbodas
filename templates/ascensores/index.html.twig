@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AscensoresController!{% endblock %}
+{% block title %}Listado peticiones{% endblock %}
 
 {% block body %}
 
@@ -24,7 +24,13 @@
       >
         <th scope="row">{{peticion.id}}</th>
         <th scope="row">{{peticion.ascensor.getId()}}</th>
-        <th scope="row">{{peticion.ascensor.getPosicion()}}</th>
+        <th scope="row">
+          {% for distancia in distancias %}
+            {% if distancia.peticion == peticion.id and distancia.getAscensor().getPosicion() == peticion.ascensor.getPosicion() %}
+              {{distancia.getPosicionActual()}}
+            {% endif %}
+          {% endfor %}
+        </th>
         <th scope="row">{{peticion.getPlantasRecorridas()}}</th>
         <th scope="row">
           {% for distancia in distancias %}

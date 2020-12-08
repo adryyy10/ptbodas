@@ -60,13 +60,13 @@ class PeticionHandler implements PeticionesInterface
                 $distanciaTotal = $this->ascensorHandler->setNuevoRecorridoAscensor($ascensorDisponible, $distanciaRecorrida);
 
                 //Actualizamos posicion del ascensor
-                $this->ascensorHandler->setPosicion($ascensorDisponible,$destino);
+                $posicionActual = $this->ascensorHandler->setPosicion($ascensorDisponible,$destino);
                 
                 //Insertamos en la Tabla Solicitudes, nuestra nueva solicitud con el ascensor asignado
                 $peticionId = $this->createNewPeticion($ascensorDisponible, $inicio, $final, $origen, $destino, $distanciaRecorrida);
 
                 //Insertamos en la Tabla Distancias, nuestra distancia 
-                $this->distanciasHandler->createNewDistanciaTotalBySolicitud($distanciaTotal, $ascensorDisponible, $peticionId);
+                $this->distanciasHandler->createNewDistanciaTotalBySolicitud($distanciaTotal, $ascensorDisponible, $peticionId, $posicionActual);
 
                 //Setear el nuevo ascensor ocupado a disponible otra vez ya que ha acabado su solicitud
                 $ascensorDisponible = $this->ascensorHandler->setAscensorLibre($ascensorDisponible);
