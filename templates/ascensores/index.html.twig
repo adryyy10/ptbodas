@@ -16,12 +16,23 @@
   </thead>
   <tbody>
     {% for peticion in peticiones %}
-      <tr>
+      <tr 
+        {% if peticion.ascensor.getId() == 1 %} class="ascensor-1" 
+        {% elseif peticion.ascensor.getId() == 2 %} class="ascensor-2" 
+        {% else %} class="ascensor-3" 
+        {% endif %}
+      >
         <th scope="row">{{peticion.id}}</th>
         <th scope="row">{{peticion.ascensor.getId()}}</th>
         <th scope="row">{{peticion.ascensor.getPosicion()}}</th>
         <th scope="row">{{peticion.getPlantasRecorridas()}}</th>
-        <th scope="row">{{peticion.ascensor.getDistanciaTotal()}}</th>
+        <th scope="row">
+          {% for distancia in distancias %}
+            {% if distancia.peticion == peticion.id and distancia.getAscensor().getId() == peticion.ascensor.getId() %}
+              {{distancia.getDistanciaTotal()}}
+            {% endif %}
+          {% endfor %}
+        </th>
       </tr>
     {% endfor %}
   </tbody>

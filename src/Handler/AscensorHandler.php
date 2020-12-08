@@ -75,12 +75,14 @@ class AscensorHandler implements AscensoresInterface
         $this->flushAscensor();
     }
 
-    public function setNuevoRecorridoAscensor($ascensor, $distanciaRecorrida)
+    public function setNuevoRecorridoAscensor($ascensor, $distanciaRecorrida): string
     {
         $ascensor = $this->searchAscensor($ascensor);
         $distanciaTotal = $ascensor->getDistanciaTotal() + $distanciaRecorrida;
         $ascensor->setDistanciaTotal($distanciaTotal);
         $this->flushAscensor();
+
+        return $distanciaTotal;
     }
 
     public function setPosicion($ascensor, $destino)

@@ -7,7 +7,7 @@ use App\Entity\Ascensores;
 interface AscensoresInterface 
 {
 
-    public function searchAllAscensores();
+    public function searchAllAscensores(): array;
 
     public function searchAscensor(Ascensores $ascensor);
 
